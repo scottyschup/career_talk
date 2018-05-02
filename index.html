@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Digital Clock</title>
+  <style type="text/css">
+    .clock {
+      background-color: black;
+      color: white;
+      width: 256px;
+      margin: 20px auto;
+      overflow: auto;
+    }
+
+    .unit {
+      background-color: darkgrey;
+      color: black;
+      border: 2px solid white;
+      border-radius: 5x;
+      height: 50px;
+      width: 50px;
+      margin: 5px;
+      float: left;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .hidden {
+      visibility: hidden;
+    }
+  </style>
+  <script type="text/javascript">
+    var interval;
+
+    function startFlashing () {
+      interval = setInterval(function () {
+        flash();
+      }, 1000);
+    }
+
+    function stopFlashing () {
+      clearInterval(interval);
+      ensureVisible();
+    }
+
+    function ensureVisible () {
+      flash('visible');
+    }
+
+    function flash (state = null) {
+      var spans = document.querySelectorAll('.unit > span');
+      for (var i in spans) {
+        var list = spans[i].classList;
+        if (!list) continue;
+        if (list.contains('hidden') || state === 'visible') {
+          list.remove('hidden');
+        } else {
+          list.add('hidden');
+        }
+      }
+    }
+
+    startFlashing();
+  </script>
+</head>
+<body>
+  <h1>The current time is:</h1>
+  <div class="clock">
+    <div id="hours" class="unit">
+      <span>12</span>
+    </div>
+    <div id="minutes" class="unit">
+      <span>00</span>
+    </div>
+    <div id="seconds" class="unit">
+      <span>00</span>
+    </div>
+    <div id="am-pm" class="unit">
+      <span>am</span>
+    </div>
+    <button onclick="stopFlashing();">OMG Stop Flashing</button>
+  </div>
+</body>
+</html>
